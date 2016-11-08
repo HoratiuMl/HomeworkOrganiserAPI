@@ -22,5 +22,9 @@
     }
   },
   "author": "Horațiu Mlendea",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/HoratiuMl/HomeworkOrganiserAPI/issues"
+  },
+  "homepage": "https://github.com/HoratiuMl//HomeworkOrganiserAPI#readme"
 }
