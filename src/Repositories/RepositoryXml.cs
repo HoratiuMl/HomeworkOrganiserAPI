@@ -52,7 +52,8 @@ namespace HomeworkOrganiser.API.Repositories
         /// </summary>
         public void Save()
         {
-            using (StreamWriter sw = new StreamWriter(FileName))
+            using (FileStream fs = new FileStream(FileName, FileMode.Open, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
             {
                 XmlSerializer xs = new XmlSerializer(typeof(List<T>));
                 xs.Serialize(sw, Entities);
@@ -64,12 +65,13 @@ namespace HomeworkOrganiser.API.Repositories
         /// </summary>
         public void Load()
         {
-            XmlSerializer xs = new XmlSerializer(typeof(List<T>));
-
             if (!File.Exists(FileName))
                 return;
 
-            using (StreamReader sr = new StreamReader(FileName))
+            XmlSerializer xs = new XmlSerializer(typeof(List<T>));
+
+            using (FileStream fs = new FileStream(FileName, FileMode.Open, FileAccess.Read))
+            using (StreamReader sr = new StreamReader(fs))
             {
                 Entities = (List<T>)xs.Deserialize(sr);
             }
