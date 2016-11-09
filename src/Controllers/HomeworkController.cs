@@ -10,17 +10,30 @@ namespace HomeworkOrganiser.API.Controllers
     public class HomeworkController : Controller
     {
         private static List<Homework> homeworks;
+
+        /// <summary>
+        /// 
+        /// </summary>
         static HomeworkController()
         {
             homeworks = new List<Homework>();
         }
 
+        /// <summary>
+        /// Gets all homeworks
+        /// </summary>
+        /// <returns>All homeworks</returns>
         [HttpGet]
         public IEnumerable<Homework> GetAll()
         {
             return homeworks.AsReadOnly();
         }
 
+        /// <summary>
+        /// Gets a homework
+        /// </summary>
+        /// <param name="id">Identifier</param>
+        /// <returns>The desired homework</returns>
         [HttpGet("{id}", Name = "GetHomework")]
         public IActionResult GetById(string id)
         {
@@ -32,18 +45,27 @@ namespace HomeworkOrganiser.API.Controllers
             return new ObjectResult(item);
         }
 
+        /// <summary>
+        /// Adds a new homework
+        /// </summary>
+        /// <param name="homework">Homework</param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult Create([FromBody] Homework item)
+        public IActionResult Create([FromBody] Homework homework)
         {
-            if (item == null)
+            if (homework == null)
                 return BadRequest();
             
-            item.Id = (homeworks.Count + 1).ToString();
-            homeworks.Add(item);
+            homework.Id = (homeworks.Count + 1).ToString();
+            homeworks.Add(homework);
 
-            return CreatedAtRoute("GetHomework", new { controller = "Homework", id = item.Id }, item);
+            return CreatedAtRoute("GetHomework", new { controller = "Homework", id = homework.Id }, homework);
         }
 
+        /// <summary>
+        /// Removes a homework
+        /// </summary>
+        /// <param name="id">Identifier</param>
         [HttpDelete("{id}")]
         public void Delete(string id)
         {

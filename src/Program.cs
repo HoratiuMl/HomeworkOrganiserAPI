@@ -6,6 +6,10 @@ namespace HomeworkOrganiser.API
 {
     public class Program
     {
+        /// <summary>
+        /// The entry point of the program, where the program control starts and ends.
+        /// </summary>
+        /// /// <param name="args"></param>
         public static void Main(string[] args)
         {
             IWebHost host = new WebHostBuilder()
@@ -17,7 +21,7 @@ namespace HomeworkOrganiser.API
         }
 
         /// <summary>
-        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// This method gets called by the runtime and is used to add services to the container.
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
@@ -26,7 +30,7 @@ namespace HomeworkOrganiser.API
         }
 
         /// <summary>
-        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// This method gets called by the runtime and is usded to configure the HTTP request pipeline.
         /// </summary>
         /// <param name="app"></param>
         public void Configure(IApplicationBuilder app)
