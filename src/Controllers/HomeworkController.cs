@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
@@ -43,14 +44,20 @@ namespace HomeworkOrganiser.API.Controllers
         /// <param name="homework">Homework</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create([FromBody] Homework homework)
+        public IActionResult Create(string title, string description, string deadline, int grade)
         {
-            if (homework == null)
-                return BadRequest();
-            
+            Console.WriteLine("Am primit request de POST!");
+
             RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            Homework homework = new Homework
+            {
+                Id = Guid.NewGuid().ToString(),
+                Title = title,
+                Description = description,
+                Deadline = DateTime.Parse(deadline),
+                Grade = grade
+            };
             
-            homework.Id = "hw" + (homeworkRepository.Size + 1).ToString();
             homeworkRepository.Add(homework);
             
             return CreatedAtRoute("GetHomework", new { controller = "Homework", id = homework.Id }, homework);

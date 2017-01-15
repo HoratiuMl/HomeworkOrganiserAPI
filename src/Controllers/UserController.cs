@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,9 +46,16 @@ namespace HomeworkOrganiser.API.Controllers
         /// <param name="user">User</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create([FromBody] User user)
+        public IActionResult Create(string email, string password, string name)
         {
             RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
+            User user = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                EmailAddress = email,
+                Name = name,
+                Password = password
+            };
             
             userRepository.Add(user);
 
