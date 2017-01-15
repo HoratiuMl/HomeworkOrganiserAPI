@@ -64,5 +64,27 @@ namespace HomeworkOrganiser.API.Controllers
             
             userRepository.Remove(id);
         }
+
+        /// <summary>
+        /// Logs in a user
+        /// </summary>
+        /// <param name="id">Identifier</param>
+        /// <param name="password">Password</param>
+        /// <returns>The desired user</returns>
+        [HttpGet("{id}/login")]
+        public IActionResult Login(string id, string password)
+        {
+            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
+            User user = userRepository.Get(id);
+
+            bool valid = false;
+
+            if(user.Password == password)
+            {
+                valid = true;
+            }
+
+            return new ObjectResult(valid);
+        }
     }
 }
