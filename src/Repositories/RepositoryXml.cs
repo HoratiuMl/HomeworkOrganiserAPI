@@ -52,7 +52,17 @@ namespace HomeworkOrganiser.API.Repositories
         /// </summary>
         public void Save()
         {
-            using (FileStream fs = new FileStream(FileName, FileMode.Open, FileAccess.Write))
+            FileStream fs;
+
+            if (File.Exists(FileName))
+            {
+                fs = new FileStream(FileName, FileMode.Open, FileAccess.Write);
+            }
+            else
+            {
+                fs = File.Create(FileName);
+            }
+
             using (StreamWriter sw = new StreamWriter(fs))
             {
                 XmlSerializer xs = new XmlSerializer(typeof(List<T>));

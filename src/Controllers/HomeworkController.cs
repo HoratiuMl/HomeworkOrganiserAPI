@@ -3,21 +3,14 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 using HomeworkOrganiser.API.Models;
+using HomeworkOrganiser.API.Repositories;
 
 namespace HomeworkOrganiser.API.Controllers
 {
     [Route("api/[controller]")]
     public class HomeworkController : Controller
     {
-        private static List<Homework> homeworks;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        static HomeworkController()
-        {
-            homeworks = new List<Homework>();
-        }
+        private string homeworksXmlPath = "/home/horatiu/.homeworkorganiser/homeworks.xml";
 
         /// <summary>
         /// Gets all homeworks
@@ -26,7 +19,9 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpGet]
         public IEnumerable<Homework> GetAll()
         {
-            return homeworks.AsReadOnly();
+            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            
+            return homeworkRepository.GetAll();
         }
 
         /// <summary>
@@ -37,12 +32,9 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpGet("{id}", Name = "GetHomework")]
         public IActionResult GetById(string id)
         {
-            Homework item = homeworks.Find(n => n.Id == id);
-
-            if (item == null)
-                return NotFound();
-
-            return new ObjectResult(item);
+            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            
+            return new ObjectResult(homeworkRepository.Get(id));
         }
 
         /// <summary>
@@ -56,9 +48,11 @@ namespace HomeworkOrganiser.API.Controllers
             if (homework == null)
                 return BadRequest();
             
-            homework.Id = (homeworks.Count + 1).ToString();
-            homeworks.Add(homework);
-
+            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            
+            homework.Id = "hw" + (homeworkRepository.Size + 1).ToString();
+            homeworkRepository.Add(homework);
+            
             return CreatedAtRoute("GetHomework", new { controller = "Homework", id = homework.Id }, homework);
         }
 
@@ -69,7 +63,9 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpDelete("{id}")]
         public void Delete(string id)
         {
-            homeworks.RemoveAll(n => n.Id == id);
+            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            
+            homeworkRepository.Remove(id);
         }
     }
 }

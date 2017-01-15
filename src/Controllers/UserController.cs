@@ -3,21 +3,14 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 using HomeworkOrganiser.API.Models;
+using HomeworkOrganiser.API.Repositories;
 
 namespace HomeworkOrganiser.API.Controllers
 {
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private static List<User> users;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        static UserController()
-        {
-            users = new List<User>();
-        }
+        private string userXmlPath = "/home/horatiu/.homeworkorganiser/users.xml";
 
         /// <summary>
         /// Gets all userss
@@ -26,7 +19,9 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpGet]
         public IEnumerable<User> GetAll()
         {
-            return users.AsReadOnly();
+            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
+            
+            return userRepository.GetAll();
         }
 
         /// <summary>
@@ -37,12 +32,10 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpGet("{id}", Name = "GetUser")]
         public IActionResult GetById(string id)
         {
-            User item = users.Find(n => n.Id == id);
+            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
+            User user = userRepository.Get(id);
 
-            if (item == null)
-                return NotFound();
-
-            return new ObjectResult(item);
+            return new ObjectResult(user);
         }
 
         /// <summary>
@@ -53,11 +46,9 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] User user)
         {
-            if (user == null)
-                return BadRequest();
+            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
             
-            user.Id = (users.Count + 1).ToString();
-            users.Add(user);
+            userRepository.Add(user);
 
             return CreatedAtRoute("GetUser", new { controller = "User", id = user.Id }, user);
         }
@@ -69,7 +60,9 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpDelete("{id}")]
         public void Delete(string id)
         {
-            users.RemoveAll(n => n.Id == id);
+            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
+            
+            userRepository.Remove(id);
         }
     }
 }
