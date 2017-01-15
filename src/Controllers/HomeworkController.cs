@@ -14,40 +14,13 @@ namespace HomeworkOrganiser.API.Controllers
         private string homeworksXmlPath = "/home/horatiu/.homeworkorganiser/homeworks.xml";
 
         /// <summary>
-        /// Gets all homeworks
-        /// </summary>
-        /// <returns>All homeworks</returns>
-        [HttpGet]
-        public IEnumerable<Homework> GetAll()
-        {
-            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
-            
-            return homeworkRepository.GetAll();
-        }
-
-        /// <summary>
-        /// Gets a homework
-        /// </summary>
-        /// <param name="id">Identifier</param>
-        /// <returns>The desired homework</returns>
-        [HttpGet("{id}", Name = "GetHomework")]
-        public IActionResult GetById(string id)
-        {
-            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
-            
-            return new ObjectResult(homeworkRepository.Get(id));
-        }
-
-        /// <summary>
         /// Adds a new homework
         /// </summary>
         /// <param name="homework">Homework</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create(string title, string description, string deadline, int grade)
+        public IActionResult Post(string title, string description, string deadline, int grade)
         {
-            Console.WriteLine("Am primit request de POST!");
-
             RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
             Homework homework = new Homework
             {
@@ -61,6 +34,31 @@ namespace HomeworkOrganiser.API.Controllers
             homeworkRepository.Add(homework);
             
             return CreatedAtRoute("GetHomework", new { controller = "Homework", id = homework.Id }, homework);
+        }
+
+        /// <summary>
+        /// Gets a homework
+        /// </summary>
+        /// <param name="id">Identifier</param>
+        /// <returns>The desired homework</returns>
+        [HttpGet("{id}", Name = "GetHomework")]
+        public IActionResult Get(string id)
+        {
+            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            
+            return new ObjectResult(homeworkRepository.Get(id));
+        }
+
+        /// <summary>
+        /// Gets all homeworks
+        /// </summary>
+        /// <returns>All homeworks</returns>
+        [HttpGet]
+        public IEnumerable<Homework> GetAll()
+        {
+            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            
+            return homeworkRepository.GetAll();
         }
 
         /// <summary>

@@ -15,38 +15,12 @@ namespace HomeworkOrganiser.API.Controllers
         private string userXmlPath = "/home/horatiu/.homeworkorganiser/users.xml";
 
         /// <summary>
-        /// Gets all userss
-        /// </summary>
-        /// <returns>All users</returns>
-        [HttpGet]
-        public IEnumerable<User> GetAll()
-        {
-            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
-            
-            return userRepository.GetAll();
-        }
-
-        /// <summary>
-        /// Gets a user
-        /// </summary>
-        /// <param name="id">Identifier</param>
-        /// <returns>The desired user</returns>
-        [HttpGet("{id}", Name = "GetUser")]
-        public IActionResult GetById(string id)
-        {
-            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
-            User user = userRepository.Get(id);
-
-            return new ObjectResult(user);
-        }
-
-        /// <summary>
         /// Adds a new user
         /// </summary>
         /// <param name="user">User</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create(string email, string password, string name)
+        public IActionResult Post(string email, string password, string name)
         {
             RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
             User user = new User
@@ -60,6 +34,32 @@ namespace HomeworkOrganiser.API.Controllers
             userRepository.Add(user);
 
             return CreatedAtRoute("GetUser", new { controller = "User", id = user.Id }, user);
+        }
+
+        /// <summary>
+        /// Gets a user
+        /// </summary>
+        /// <param name="id">Identifier</param>
+        /// <returns>The desired user</returns>
+        [HttpGet("{id}")]
+        public IActionResult Get(string id)
+        {
+            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
+            User user = userRepository.Get(id);
+
+            return new ObjectResult(user);
+        }
+
+        /// <summary>
+        /// Gets all userss
+        /// </summary>
+        /// <returns>All users</returns>
+        [HttpGet]
+        public IEnumerable<User> GetAll()
+        {
+            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
+            
+            return userRepository.GetAll();
         }
 
         /// <summary>
@@ -77,33 +77,11 @@ namespace HomeworkOrganiser.API.Controllers
         /// <summary>
         /// Logs in a user
         /// </summary>
-        /// <param name="id">Identifier</param>
-        /// <param name="password">Password</param>
-        /// <returns>True if the credentials are valid, false otherwise</returns>
-        [HttpGet("login")]
-        public IActionResult Login(string id, string password)
-        {
-            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
-            User user = userRepository.Get(id);
-
-            bool valid = false;
-
-            if(user.Password == password)
-            {
-                valid = true;
-            }
-
-            return new ObjectResult(valid);
-        }
-
-        /// <summary>
-        /// Logs in a user by email
-        /// </summary>
         /// <param name="email">Email address</param>
         /// <param name="password">Password</param>
         /// <returns>True if the credentials are valid, false otherwise</returns>
-        [HttpGet("loginByEmail")]
-        public IActionResult LoginByEmail(string email, string password)
+        [HttpPost("login")]
+        public IActionResult Login(string email, string password)
         {
             RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
             User user = userRepository.GetAll().FirstOrDefault(x => x.EmailAddress.ToLower() == email.ToLower());
