@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -70,13 +71,34 @@ namespace HomeworkOrganiser.API.Controllers
         /// </summary>
         /// <param name="id">Identifier</param>
         /// <param name="password">Password</param>
-        /// <returns>The desired user</returns>
-        [HttpGet("{id}/login")]
+        /// <returns>True if the credentials are valid, false otherwise</returns>
+        [HttpGet("login")]
         public IActionResult Login(string id, string password)
         {
             RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
             User user = userRepository.Get(id);
 
+            bool valid = false;
+
+            if(user.Password == password)
+            {
+                valid = true;
+            }
+
+            return new ObjectResult(valid);
+        }
+
+        /// <summary>
+        /// Logs in a user by email
+        /// </summary>
+        /// <param name="email">Email address</param>
+        /// <param name="password">Password</param>
+        /// <returns>True if the credentials are valid, false otherwise</returns>
+        [HttpGet("loginByEmail")]
+        public IActionResult LoginByEmail(string email, string password)
+        {
+            RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
+            User user = userRepository.GetAll().FirstOrDefault(x => x.EmailAddress.ToLower() == email.ToLower());
             bool valid = false;
 
             if(user.Password == password)
