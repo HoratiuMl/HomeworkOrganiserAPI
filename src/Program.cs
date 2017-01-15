@@ -15,6 +15,7 @@ namespace HomeworkOrganiser.API
             IWebHost host = new WebHostBuilder()
                 .UseKestrel()
                 .UseStartup<Program>()
+                .UseUrls("http://::5000")
                 .Build();
                 
             host.Run();
