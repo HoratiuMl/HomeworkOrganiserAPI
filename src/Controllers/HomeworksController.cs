@@ -9,7 +9,7 @@ using HomeworkOrganiser.API.Repositories;
 namespace HomeworkOrganiser.API.Controllers
 {
     [Route("api/[controller]")]
-    public class HomeworkController : Controller
+    public class HomeworksController : Controller
     {
         private string homeworksXmlPath = "/home/horatiu/.homeworkorganiser/homeworks.xml";
 
@@ -32,7 +32,7 @@ namespace HomeworkOrganiser.API.Controllers
             };
             
             homeworkRepository.Add(homework);
-            
+
             return CreatedAtRoute("GetHomework", new { controller = "Homework", id = homework.Id }, homework);
         }
 
@@ -41,12 +41,13 @@ namespace HomeworkOrganiser.API.Controllers
         /// </summary>
         /// <param name="id">Identifier</param>
         /// <returns>The desired homework</returns>
-        [HttpGet("{id}", Name = "GetHomework")]
+        [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
             RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
-            
-            return new ObjectResult(homeworkRepository.Get(id));
+            Homework homework = homeworkRepository.Get(id);
+
+            return new ObjectResult(homework);
         }
 
         /// <summary>
@@ -54,11 +55,12 @@ namespace HomeworkOrganiser.API.Controllers
         /// </summary>
         /// <returns>All homeworks</returns>
         [HttpGet]
-        public IEnumerable<Homework> GetAll()
+        public IActionResult Get()
         {
             RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            IEnumerable<Homework> homeworks = homeworkRepository.GetAll();
             
-            return homeworkRepository.GetAll();
+            return new ObjectResult(homeworks);
         }
 
         /// <summary>
@@ -66,11 +68,13 @@ namespace HomeworkOrganiser.API.Controllers
         /// </summary>
         /// <param name="id">Identifier</param>
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public IActionResult Delete(string id)
         {
             RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
             
             homeworkRepository.Remove(id);
+            
+            return NoContent();
         }
     }
 }

@@ -10,7 +10,7 @@ using HomeworkOrganiser.API.Repositories;
 namespace HomeworkOrganiser.API.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         private string userXmlPath = "/home/horatiu/.homeworkorganiser/users.xml";
 
@@ -55,11 +55,12 @@ namespace HomeworkOrganiser.API.Controllers
         /// </summary>
         /// <returns>All users</returns>
         [HttpGet]
-        public IEnumerable<User> GetAll()
+        public IActionResult Get()
         {
             RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
-            
-            return userRepository.GetAll();
+            IEnumerable<User> users = userRepository.GetAll();
+
+            return new ObjectResult(users);
         }
 
         /// <summary>
@@ -67,11 +68,13 @@ namespace HomeworkOrganiser.API.Controllers
         /// </summary>
         /// <param name="id">Identifier</param>
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public IActionResult Delete(string id)
         {
             RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
             
             userRepository.Remove(id);
+
+            return NoContent();
         }
 
         /// <summary>
