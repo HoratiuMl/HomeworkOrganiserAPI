@@ -65,8 +65,8 @@ namespace HomeworkOrganiser.API.Repositories
 
             using (StreamWriter sw = new StreamWriter(fs))
             {
-                XmlSerializer xs = new XmlSerializer(typeof(List<T>));
-                xs.Serialize(sw, Entities);
+                XmlSerializer xs = new XmlSerializer(typeof(Dictionary<string, T>));
+                xs.Serialize(sw, DataStore);
             }
         }
 
@@ -83,7 +83,7 @@ namespace HomeworkOrganiser.API.Repositories
             using (FileStream fs = new FileStream(FileName, FileMode.Open, FileAccess.Read))
             using (StreamReader sr = new StreamReader(fs))
             {
-                Entities = (List<T>)xs.Deserialize(sr);
+                DataStore = (Dictionary<string, T>)xs.Deserialize(sr);
             }
         }
     }

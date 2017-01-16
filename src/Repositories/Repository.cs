@@ -1,7 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using HomeworkOrganiser.API.Exceptions;
 using HomeworkOrganiser.API.Models;
+using HomeworkOrganiser.API.Utils.Extensions;
 
 namespace HomeworkOrganiser.API.Repositories
 {
@@ -14,7 +16,7 @@ namespace HomeworkOrganiser.API.Repositories
         /// Gets or sets the entities.
         /// </summary>
         /// <value>The entities.</value>
-        protected List<T> Entities { get; set; }
+        protected Dictionary<string, T> DataStore { get; set; }
 
         /// <summary>
         /// Gets the size.
@@ -22,7 +24,22 @@ namespace HomeworkOrganiser.API.Repositories
         /// <value>The size.</value>
         public int Size
         {
-            get { return Entities.Count; }
+            get
+            {
+                if (DataStore.IsNullOrEmpty())
+                    return 0;
+
+                return DataStore.Count;
+            }
+        }
+
+        /// <summary>
+        /// Indicates wether the repository is empty.
+        /// </summary>
+        /// <value>True if the repository is empty, false otherwise.</value>
+        public bool Empty
+        {
+            get { return DataStore.IsNullOrEmpty(); }
         }
 
         /// <summary>
@@ -30,7 +47,7 @@ namespace HomeworkOrganiser.API.Repositories
         /// </summary>
         public Repository()
         {
-            Entities = new List<T>();
+            DataStore = new Dictionary<string, T>();
         }
 
         /// <summary>
@@ -39,10 +56,10 @@ namespace HomeworkOrganiser.API.Repositories
         /// <param name="entity">Entity.</param>
         public virtual void Add(T entity)
         {
-            if (Entities.Contains(entity))
-                throw new RepositoryException("The specified entity already exists");
+            if (Contains(entity))
+                throw new DuplicateEntityException(entity.Id);
 
-            Entities.Add(entity);
+            DataStore.Add(entity.Id, entity);
         }
 
         /// <summary>
@@ -51,12 +68,10 @@ namespace HomeworkOrganiser.API.Repositories
         /// <param name="id">Identifier.</param>
         public virtual T Get(string id)
         {
-            T entity = Entities.Find(E => E.Id == id);
+            if (!Contains(id))
+                throw new EntityNotFoundException(id);
 
-            if (entity == null)
-                throw new RepositoryException("An entity with the specified identifier does not exist");
-
-            return entity;
+            return DataStore[id];
         }
 
         /// <summary>
@@ -65,7 +80,7 @@ namespace HomeworkOrganiser.API.Repositories
         /// <returns>The all.</returns>
         public List<T> GetAll()
         {
-            return Entities;
+            return DataStore.Values.ToList();
         }
 
         /// <summary>
@@ -75,9 +90,9 @@ namespace HomeworkOrganiser.API.Repositories
         public virtual void Remove(T entity)
         {
             if (!Contains(entity))
-                throw new RepositoryException("The specified entity does not exist");
+                throw new EntityNotFoundException(entity.Id);
 
-            Entities.Remove(entity);
+            DataStore.Remove(entity.Id);
         }
 
         /// <summary>
@@ -87,35 +102,35 @@ namespace HomeworkOrganiser.API.Repositories
         public virtual void Remove(string id)
         {
             if (!Contains(id))
-                throw new RepositoryException("An entity with the specified identifier does not exist");
+                throw new EntityNotFoundException(id);
 
-            Entities.RemoveAll(T => T.Id == id);
+            DataStore.Remove(id);
         }
 
         /// <summary>
-        /// Clear this instance.
+        /// Empties the data store.
         /// </summary>
         public void Clear()
         {
-            Entities.Clear();
+            DataStore.Clear();
         }
 
         /// <summary>
-        /// Contains the specified entity.
+        /// Checks wether the specified entity exists.
         /// </summary>
         /// <param name="entity">Entity.</param>
         public bool Contains(T entity)
         {
-            return Entities.Find(E => E.Equals(entity)) != null;
+            return DataStore.ContainsValue(entity);
         }
 
         /// <summary>
-        /// Contains the specified entity.
+        /// Checks wether an entity with the specified identifier exists.
         /// </summary>
         /// <param name="id">Identifier.</param>
         public bool Contains(string id)
         {
-            return Entities.Find(E => E.Id == id) != null;
+            return DataStore.ContainsKey(id);
         }
     }
 }
