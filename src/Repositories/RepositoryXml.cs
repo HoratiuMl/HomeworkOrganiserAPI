@@ -49,22 +49,23 @@ namespace HomeworkOrganiser.API.Repositories
         }
 
         /// <summary>
+        /// Remove the specified entity.
+        /// </summary>
+        /// <param name="id">Identifier.</param>
+        public override void Remove(string id)
+        {
+            base.Remove(id);
+            Save();
+        }
+
+        /// <summary>
         /// Save this instance.
         /// </summary>
         public void Save()
         {
-            FileStream fs;
+            FileStream fs = new FileStream(FileName, FileMode.Create, FileAccess.Write);
             List<T> entities = new List<T>(DataStore.Values);
-
-            if (File.Exists(FileName))
-            {
-                fs = new FileStream(FileName, FileMode.Open, FileAccess.Write);
-            }
-            else
-            {
-                fs = File.Create(FileName);
-            }
-
+            
             using (StreamWriter sw = new StreamWriter(fs))
             {
                 XmlSerializer xs = new XmlSerializer(typeof(List<T>));
