@@ -1,5 +1,6 @@
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 
 using HomeworkOrganiser.API.Models;
@@ -53,6 +54,7 @@ namespace HomeworkOrganiser.API.Repositories
         public void Save()
         {
             FileStream fs;
+            List<T> entities = new List<T>(DataStore.Values);
 
             if (File.Exists(FileName))
             {
@@ -65,8 +67,8 @@ namespace HomeworkOrganiser.API.Repositories
 
             using (StreamWriter sw = new StreamWriter(fs))
             {
-                XmlSerializer xs = new XmlSerializer(typeof(Dictionary<string, T>));
-                xs.Serialize(sw, DataStore);
+                XmlSerializer xs = new XmlSerializer(typeof(List<T>));
+                xs.Serialize(sw, entities);
             }
         }
 
@@ -79,12 +81,15 @@ namespace HomeworkOrganiser.API.Repositories
                 return;
 
             XmlSerializer xs = new XmlSerializer(typeof(List<T>));
+            List<T> entities;
 
             using (FileStream fs = new FileStream(FileName, FileMode.Open, FileAccess.Read))
             using (StreamReader sr = new StreamReader(fs))
             {
-                DataStore = (Dictionary<string, T>)xs.Deserialize(sr);
+                entities = (List<T>)xs.Deserialize(sr);
             }
+
+            DataStore = entities.ToDictionary(E => E.Id, E => E);
         }
     }
 }
