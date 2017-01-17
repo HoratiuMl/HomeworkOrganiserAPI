@@ -21,7 +21,7 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpPost]
         public IActionResult Post(string title, string description, string deadline, int grade)
         {
-            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
             Homework homework = new Homework
             {
                 Id = Guid.NewGuid().ToString(),
@@ -44,7 +44,7 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
             Homework homework = homeworkRepository.Get(id);
 
             return new ObjectResult(homework);
@@ -57,10 +57,26 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
             IEnumerable<Homework> homeworks = homeworkRepository.GetAll();
             
             return new ObjectResult(homeworks);
+        }
+
+        /// <summary>
+        /// Updates a homework
+        /// </summary>
+        /// <param name="id">Identifier</param>
+        [HttpPut("{id}")]
+        public IActionResult Put(string id, string title, string description, string deadline, int grade)
+        {
+            HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
+            Homework homework = homeworkRepository.Get(id);
+
+            homeworkRepository.Modify(id, title, description, DateTime.Parse(deadline), grade);
+
+            // TODO: Check if this is the proper response
+            return NoContent();
         }
 
         /// <summary>
@@ -70,7 +86,7 @@ namespace HomeworkOrganiser.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
-            RepositoryXml<Homework> homeworkRepository = new RepositoryXml<Homework>(homeworksXmlPath);
+            HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
             
             homeworkRepository.Remove(id);
             
