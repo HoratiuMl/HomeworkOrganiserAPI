@@ -19,12 +19,13 @@ namespace HomeworkOrganiser.API.Controllers
         /// <param name="homework">Homework</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post(string title, string description, string deadline, int grade)
+        public IActionResult Post(string title, string userId, string description, string deadline, int grade)
         {
             HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
             Homework homework = new Homework
             {
                 Id = Guid.NewGuid().ToString(),
+                UserId = userId,
                 Title = title,
                 Description = description,
                 Deadline = DateTime.Parse(deadline),
@@ -34,6 +35,34 @@ namespace HomeworkOrganiser.API.Controllers
             homeworkRepository.Add(homework);
 
             return CreatedAtRoute("GetHomework", new { controller = "Homework", id = homework.Id }, homework);
+        }
+
+        /// <summary>
+        /// Gets all homeworks
+        /// </summary>
+        /// <returns>All homeworks</returns>
+        [HttpGet]
+        public IActionResult Get()
+        {
+            HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
+            IEnumerable<Homework> homeworks = homeworkRepository.GetAll();
+            
+            return new ObjectResult(homeworks);
+        }
+
+        /// <summary>
+        /// Gets all homeworks
+        /// </summary>
+        /// <returns>All homeworks</returns>
+        [Route("ByUser")]
+        [HttpGet("byuser/{userId}")]
+        public IActionResult GetAllByUserId(string userId)
+        {
+            Console.WriteLine(userId);
+            HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
+            IEnumerable<Homework> homeworks = homeworkRepository.GetAllByUserId(userId);
+
+            return new ObjectResult(homeworks);
         }
 
         /// <summary>
@@ -51,19 +80,6 @@ namespace HomeworkOrganiser.API.Controllers
         }
 
         /// <summary>
-        /// Gets all homeworks
-        /// </summary>
-        /// <returns>All homeworks</returns>
-        [HttpGet]
-        public IActionResult Get()
-        {
-            HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
-            IEnumerable<Homework> homeworks = homeworkRepository.GetAll();
-            
-            return new ObjectResult(homeworks);
-        }
-
-        /// <summary>
         /// Updates a homework
         /// </summary>
         /// <param name="id">Identifier</param>
@@ -73,7 +89,12 @@ namespace HomeworkOrganiser.API.Controllers
             HomeworkRepository homeworkRepository = new HomeworkRepository(homeworksXmlPath);
             Homework homework = homeworkRepository.Get(id);
 
-            homeworkRepository.Modify(id, title, description, DateTime.Parse(deadline), grade);
+            homework.Title = title;
+            homework.Description = description;
+            homework.Deadline = DateTime.Parse(deadline);
+            homework.Grade = grade;
+
+            homeworkRepository.Modify(homework);
 
             // TODO: Check if this is the proper response
             return NoContent();

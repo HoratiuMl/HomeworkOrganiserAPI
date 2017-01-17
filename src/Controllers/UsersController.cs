@@ -93,19 +93,23 @@ namespace HomeworkOrganiser.API.Controllers
         /// <param name="email">Email address</param>
         /// <param name="password">Password</param>
         /// <returns>True if the credentials are valid, false otherwise</returns>
-        [HttpPost("login")]
+        [Route("Login")]
+        [HttpPost]
         public IActionResult Login(string email, string password)
         {
             RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
             User user = userRepository.GetAll().FirstOrDefault(x => x.EmailAddress.ToLower() == email.ToLower());
-            bool success = false;
-
-            if (user?.Password == password)
+            
+            bool success =  user?.Password == password;
+            
+            if (success)
             {
-                success = true;
+                return new ObjectResult(new { success, userId = user.Id });
             }
-
-            return new ObjectResult(new { success });
+            else
+            {
+                return new ObjectResult(new { success });
+            }
         }
     }
 }

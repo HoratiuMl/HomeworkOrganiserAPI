@@ -1,4 +1,5 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using HomeworkOrganiser.API.Models;
 
@@ -16,21 +17,23 @@ namespace HomeworkOrganiser.API.Repositories
 
         }
 
+        public List<Homework> GetAllByUserId(string userId)
+        {
+            return DataStore.Values.Where(x => x.UserId == userId).ToList();
+        }
+
         /// <summary>
         /// Modifies the homework.
         /// </summary>
-        /// <param name="id">Identifier.</param>
-        /// <param name="title">Title.</param>
-        /// <param name="description">Description.</param> <summary>
-        /// <param name="grade">Grade.</param>
-        public void Modify(string id, string title, string description, DateTime deadline, int grade)
+        /// <param name="homework">Homework.</param>
+        public void Modify(Homework homework)
         {
-            Homework homework = Get(id);
+            Homework oldHomework = Get(homework.Id);
             
-            homework.Title = title;
-            homework.Description = description;
-            homework.Deadline = deadline;
-            homework.Grade = grade;
+            oldHomework.Title = homework.Title;
+            oldHomework.Description = homework.Description;
+            oldHomework.Deadline = homework.Deadline;
+            oldHomework.Grade = homework.Grade;
 
             Save();
         }
