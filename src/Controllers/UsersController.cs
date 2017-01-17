@@ -30,10 +30,20 @@ namespace HomeworkOrganiser.API.Controllers
                 Name = name,
                 Password = password
             };
-            
-            userRepository.Add(user);
 
-            return CreatedAtRoute("GetUser", new { controller = "User", id = user.Id }, user);
+            bool success = false;
+            
+            try
+            {
+                userRepository.Add(user);
+                success = true;
+            }
+            catch
+            {
+                success = false;
+            }
+
+            return new ObjectResult (new { success });
         }
 
         /// <summary>
