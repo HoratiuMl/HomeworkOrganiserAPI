@@ -90,10 +90,11 @@ namespace HomeworkOrganiser.API.Controllers
             User user = userRepository.GetAll().FirstOrDefault(x => x.EmailAddress.ToLower() == email.ToLower());
             bool success = false;
 
-            if(user?.Password == password)
+            if (user?.Password == password)
             {
                 success = true;
             }
+
             return new ObjectResult(new { success });
         }
     }
