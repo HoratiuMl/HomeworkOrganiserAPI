@@ -88,14 +88,13 @@ namespace HomeworkOrganiser.API.Controllers
         {
             RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
             User user = userRepository.GetAll().FirstOrDefault(x => x.EmailAddress.ToLower() == email.ToLower());
-            bool valid = false;
+            bool success = false;
 
             if(user.Password == password)
             {
-                valid = true;
+                success = true;
             }
-
-            return new ObjectResult(valid);
+            return new ObjectResult(new { success });
         }
     }
 }
