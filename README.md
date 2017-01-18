@@ -1,2 +1,2 @@
 # HomeworkOrganiserAPI
-API for HomeworkOrganiser
+REST API for HomeworkOrganiser, made in .NET Core
