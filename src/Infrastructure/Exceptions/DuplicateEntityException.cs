@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HomeworkOrganiser.API.Exceptions
+namespace HomeworkOrganiserAPI.Infrastructure.Exceptions
 {
     /// <summary>
     /// Duplicate entity exception.
@@ -8,7 +8,7 @@ namespace HomeworkOrganiser.API.Exceptions
     public class DuplicateEntityException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeworkOrganiser.API.Repositories.DuplicateEntityException"/> class.
+        /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.DuplicateEntityException"/> class.
         /// </summary>
         public DuplicateEntityException()
             : base("Entity already exists.")
@@ -16,7 +16,7 @@ namespace HomeworkOrganiser.API.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeworkOrganiser.API.Repositories.DuplicateEntityException"/> class.
+        /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.DuplicateEntityException"/> class.
         /// </summary>
         /// <param name="entityId">Entity identifier.</param>
         public DuplicateEntityException(string entityId)
@@ -25,7 +25,7 @@ namespace HomeworkOrganiser.API.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeworkOrganiser.API.Repositories.DuplicateEntityException"/> class.
+        /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.DuplicateEntityException"/> class.
         /// </summary>
         /// <param name="entityId">Entity identifier.</param>
         /// <param name="innerException">Inner exception.</param>

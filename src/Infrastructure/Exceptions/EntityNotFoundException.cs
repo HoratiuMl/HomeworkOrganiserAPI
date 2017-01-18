@@ -1,6 +1,6 @@
 ﻿﻿using System;
 
-namespace HomeworkOrganiser.API.Exceptions
+namespace HomeworkOrganiserAPI.Infrastructure.Exceptions
 {
     /// <summary>
     /// Repository exception.
@@ -8,7 +8,7 @@ namespace HomeworkOrganiser.API.Exceptions
     public class EntityNotFoundException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeworkOrganiser.API.Repositories.DuplicateEntityException"/> class.
+        /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.DuplicateEntityException"/> class.
         /// </summary>
         public EntityNotFoundException()
             : base("Entity could not be found.")
@@ -16,7 +16,7 @@ namespace HomeworkOrganiser.API.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeworkOrganiser.API.Repositories.EntityNotFoundException"/> class.
+        /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.EntityNotFoundException"/> class.
         /// </summary>
         /// <param name="entityId">Entity identifier.</param>
         public EntityNotFoundException(string entityId)
@@ -25,7 +25,7 @@ namespace HomeworkOrganiser.API.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeworkOrganiser.API.Repositories.EntityNotFoundException"/> class.
+        /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.EntityNotFoundException"/> class.
         /// </summary>
         /// <param name="entityId">Entity identifier.</param>
         /// <param name="innerException">Inner exception.</param>

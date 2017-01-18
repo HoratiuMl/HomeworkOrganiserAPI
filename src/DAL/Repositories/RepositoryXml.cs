@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 
-using HomeworkOrganiser.API.Models;
+using HomeworkOrganiserAPI.Models;
 
-namespace HomeworkOrganiser.API.Repositories
+namespace HomeworkOrganiserAPI.DAL.Repositories
 {
     /// <summary>
     /// XML Repository.
@@ -19,7 +19,7 @@ namespace HomeworkOrganiser.API.Repositories
         public string FileName { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeworkOrganiser.API.Repositories.XmlRepository`1"/> class.
+        /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.XmlRepository`1"/> class.
         /// </summary>
         /// <param name="fileName">File name.</param>
         public RepositoryXml(string fileName)

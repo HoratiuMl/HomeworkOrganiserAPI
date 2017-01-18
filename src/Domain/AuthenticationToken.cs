@@ -1,7 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HomeworkOrganiser.API.Models
+namespace HomeworkOrganiserAPI.Models
 {
+    /// <summary>
+    /// Authentication token entity.
+    /// </summary>
     public class AuthenticationToken : EntityBase
     {
         /// <summary>

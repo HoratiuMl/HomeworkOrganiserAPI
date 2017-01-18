@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using HomeworkOrganiser.API.Models;
+using HomeworkOrganiserAPI.Models;
 
-namespace HomeworkOrganiser.API.Repositories
+namespace HomeworkOrganiserAPI.DAL.Repositories
 {
     public class HomeworkRepository : RepositoryXml<Homework>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeworkOrganiser.API.Repositories.HomeworkRepository"/> class.
+        /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.HomeworkRepository"/> class.
         /// </summary>
         /// <param name="fileName">File name.</param>
         public HomeworkRepository(string fileName)

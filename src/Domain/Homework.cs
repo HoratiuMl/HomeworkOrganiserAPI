@@ -1,8 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HomeworkOrganiser.API.Models
+namespace HomeworkOrganiserAPI.Models
 {
+    /// <summary>
+    /// Homework entity.
+    /// </summary>
     public class Homework : EntityBase
     {
         /// <summary>

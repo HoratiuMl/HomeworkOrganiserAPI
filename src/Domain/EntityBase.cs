@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HomeworkOrganiser.API.Models
+namespace HomeworkOrganiserAPI.Models
 {
     /// <summary>
-    /// Entity base.
+    /// Base class for all entities used in the Domain of this project.
     /// </summary>
     public abstract class EntityBase
     {
@@ -16,11 +16,11 @@ namespace HomeworkOrganiser.API.Models
         public virtual string Id { get; set; }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="HomeworkOrganiser.API.Models.EntityBase"/>.
+        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="HomeworkOrganiserAPI.Models.EntityBase"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="HomeworkOrganiser.API.Models.EntityBase"/>.</param>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="HomeworkOrganiserAPI.Models.EntityBase"/>.</param>
         /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-        /// <see cref="HomeworkOrganiser.API.Models.EntityBase"/>; otherwise, <c>false</c>.</returns>
+        /// <see cref="HomeworkOrganiserAPI.Models.EntityBase"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             EntityBase other = obj as EntityBase;
@@ -28,7 +28,7 @@ namespace HomeworkOrganiser.API.Models
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="HomeworkOrganiser.API.Models.EntityBase"/> object.
+        /// Serves as a hash function for a <see cref="HomeworkOrganiserAPI.Models.EntityBase"/> object.
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>
@@ -38,9 +38,9 @@ namespace HomeworkOrganiser.API.Models
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="HomeworkOrganiser.API.Models.EntityBase"/>.
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="HomeworkOrganiserAPI.Models.EntityBase"/>.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents the current <see cref="HomeworkOrganiser.API.Models.EntityBase"/>.</returns>
+        /// <returns>A <see cref="System.String"/> that represents the current <see cref="HomeworkOrganiserAPI.Models.EntityBase"/>.</returns>
         public override string ToString()
         {
             return string.Format("{0} #{1}", base.ToString(), Id);

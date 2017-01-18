@@ -1,8 +1,8 @@
 using System;
 
-using HomeworkOrganiser.API.Models;
+using HomeworkOrganiserAPI.Models;
 
-namespace HomeworkOrganiser.API.Repositories
+namespace HomeworkOrganiserAPI.DAL.Repositories
 {
     public class UserRepository : RepositoryXml<User>
     {

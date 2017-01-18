@@ -3,11 +3,14 @@ using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
 
-using HomeworkOrganiser.API.Models;
-using HomeworkOrganiser.API.Repositories;
+using HomeworkOrganiserAPI.Models;
+using HomeworkOrganiserAPI.DAL.Repositories;
 
-namespace HomeworkOrganiser.API.Controllers
+namespace HomeworkOrganiserAPI.Controllers
 {
+    /// <summary>
+    /// Homeworks controller
+    /// </summary>
     [Route("api/[controller]")]
     public class HomeworksController : Controller
     {

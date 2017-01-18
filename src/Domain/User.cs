@@ -1,7 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HomeworkOrganiser.API.Models
+namespace HomeworkOrganiserAPI.Models
 {
+    /// <summary>
+    /// User entity.
+    /// </summary>
     public class User : EntityBase
     {
         /// <summary>
@@ -26,11 +29,11 @@ namespace HomeworkOrganiser.API.Models
         public string Password { get; set; }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="HomeworkOrganiser.API.Models.EntityBase"/>.
+        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="HomeworkOrganiserAPI.Models.EntityBase"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="HomeworkOrganiser.API.Models.EntityBase"/>.</param>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="HomeworkOrganiserAPI.Models.EntityBase"/>.</param>
         /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-        /// <see cref="HomeworkOrganiser.API.Models.EntityBase"/>; otherwise, <c>false</c>.</returns>
+        /// <see cref="HomeworkOrganiserAPI.Models.EntityBase"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             User other = obj as User;
@@ -45,7 +48,7 @@ namespace HomeworkOrganiser.API.Models
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="HomeworkOrganiser.API.Models.EntityBase"/> object.
+        /// Serves as a hash function for a <see cref="HomeworkOrganiserAPI.Models.EntityBase"/> object.
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>

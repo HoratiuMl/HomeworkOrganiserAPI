@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HomeworkOrganiser.API
+namespace HomeworkOrganiserAPI
 {
     public class Program
     {

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using HomeworkOrganiser.API.Exceptions;
-using HomeworkOrganiser.API.Models;
-using HomeworkOrganiser.API.Utils.Extensions;
+using HomeworkOrganiserAPI.Infrastructure.Exceptions;
+using HomeworkOrganiserAPI.Models;
+using HomeworkOrganiserAPI.Utils.Extensions;
 
-namespace HomeworkOrganiser.API.Repositories
+namespace HomeworkOrganiserAPI.DAL.Repositories
 {
     /// <summary>
     /// Memory Repository.
@@ -43,7 +43,7 @@ namespace HomeworkOrganiser.API.Repositories
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HomeworkOrganiser.API.Repositories.Repository`1"/> class.
+        /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.Repository`1"/> class.
         /// </summary>
         public Repository()
         {
