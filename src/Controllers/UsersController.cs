@@ -96,10 +96,13 @@ namespace HomeworkOrganiserAPI.Controllers
         /// <param name="email">Email address</param>
         /// <param name="password">Password</param>
         /// <returns>True if the credentials are valid, false otherwise</returns>
+        // TODO: Choose a more appropriate route.
         [Route("Login")]
         [HttpPost]
         public IActionResult Login(string email, string password)
         {
+            // TODO: Handle login using tokens instead of user Id.
+            
             RepositoryXml<User> userRepository = new RepositoryXml<User>(userXmlPath);
             User user = userRepository.GetAll().FirstOrDefault(x => x.EmailAddress.ToLower() == email.ToLower());
             

@@ -57,6 +57,8 @@ namespace HomeworkOrganiserAPI.Controllers
         /// Gets all homeworks
         /// </summary>
         /// <returns>All homeworks</returns>
+        // TODO: Choose a more appropriate route.
+        // TODO: Remove this method and handle filtering entirely in the GetAll(...) method.
         [Route("ByUser")]
         [HttpGet("byuser/{userId}")]
         public IActionResult GetAllByUserId(string userId)

@@ -10,6 +10,7 @@ namespace HomeworkOrganiserAPI.DAL.Repositories
     /// <summary>
     /// Memory Repository.
     /// </summary>
+    // TODO: Remove this class and replace it with an interface.
     public class Repository<T> where T : EntityBase
     {
         /// <summary>
