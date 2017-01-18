@@ -10,14 +10,12 @@ namespace HomeworkOrganiserAPI.DAL.Repositories
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeworkOrganiserAPI.DAL.Repositories.AuthenticationToken"/> class.
         /// </summary>
-        /// <param name="fileName">File name.</param>
-        public AuthenticationToken(string fileName)
-            : base(fileName)
+        public AuthenticationTokenRepository()
         {
 
         }
 
-        public List<Homework> GetAllByUserId(string userId)
+        public List<AuthenticationToken> GetAllByUserId(string userId)
         {
             return DataStore.Values.Where(x => x.UserId == userId).ToList();
         }
